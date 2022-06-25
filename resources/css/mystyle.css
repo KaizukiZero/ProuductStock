@@ -1,0 +1,12 @@
+
+.lable-size{
+    font-size: 1rem !important;
+    /* color:darkgray; */
+}
+
+@media screen and (max-width: 768px) {
+    .lable-size{
+        font-size: 0.75rem !important;
+    }
+}
+    
