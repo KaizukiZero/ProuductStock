@@ -6,6 +6,13 @@
     <div class="fs-1">
         <span>create product items</span>
     </div>
+
+    @if ($message = Session::get('success'))
+    <div class="alert alert-success">
+        <p>{{ $message }}</p>
+    </div>
+    @endif
+
     @if ($errors->any())
     <div class="alert alert-danger">
         <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -15,9 +22,10 @@
             @endforeach
         </ul>
     </div>
-@endif
+    @endif
 
     <form action="{{ route('creating') }}" method="post">
+        @csrf
         <div class="my-3 p-3 border rounded">
             <div class="fs-3 mb-2">Product Import</div>
             <div class="row align-items-center">
@@ -114,14 +122,14 @@
             <div class="col-sm-6 col-12">
                 <div class="form-floating my-2 my-sm-0">
 
-                    <input type="text" class="form-control" id="Pimportday" placeholder="Product Import" name="importday"
-                        value="{{date('Y-m-d H:i:s')}}" disabled>
+                    <input type="text" class="form-control" id="Pimportday" placeholder="Product Import" name="dateimport"
+                        value="{{date('Y-m-d H:i:s')}}">
                     <label for="Pimportday" class="lable-size">Product Import</label>
                 </div>
             </div>
             <div class="col-sm-6 col-12">
                 <div class="form-floating my-2 my-sm-0">
-                    <input type="text" class="form-control" id="Pby" placeholder="Product Create By" name="by" disabled
+                    <input type="text" class="form-control" id="Pby" placeholder="Product Create By" name="by"
                         value="Zero">
                     <label for="Pby" class="lable-size">Product Create By</label>
                 </div>
@@ -149,7 +157,6 @@
         $('#PtySeller').prop('selectedIndex', 0);
         $('#PhSeller').val('')
         $('#Pimportday').val(default_now)
-
     })
 
 </script>

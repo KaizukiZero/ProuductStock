@@ -16,8 +16,10 @@ class expiredModel extends Model
         'fd_type',
         'fd_amount',
         'fd_expired_datetime',
+        'fd_updated_datetime',
         'fd_created_datetime'
     ];
     const CREATED_AT = 'fd_created_datetime';
+    const UPDATED_AT = 'fd_updated_datetime';
     // End Config
 }

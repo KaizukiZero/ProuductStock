@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('fd_type',32);
             $table->decimal('fd_amount',8,2);
             $table->double('fd_price',8,2);
-            $table->tinyInteger('fd_status');
+            $table->tinyInteger('fd_status')->default(1);
             $table->timestampTz('fd_updated_datetime');
             $table->timestampTz('fd_created_datetime');
             // INDEX CONFIG
@@ -37,7 +37,7 @@ return new class extends Migration
             $table->double('fd_price',8,2);
             $table->string('fd_by',16);
             $table->tinyInteger('fd_action');
-            $table->tinyInteger('fd_status');
+            $table->tinyInteger('fd_status')->default(1);
             $table->timestampTz('fd_created_datetime');
             // INDEX CONFIG
             $table->index(['fd_code','fd_name','fd_type','fd_status'],'ht_index');

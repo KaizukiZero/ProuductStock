@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\productModel;
 use App\Models\expiredModel;
 use App\Models\sellerModel;
+use App\Models\historyModel;
 use Illuminate\Support\Facades\Validator;
 
 class CRUDController extends Controller
@@ -19,7 +20,21 @@ class CRUDController extends Controller
             'amount' => 'required|integer',
             'price' => 'required|integer',
             'exp' => 'required|date',
+            'Pseller' => 'required|string',
+            'Ptyseller' => 'required|string',
+            'Phseller' => 'required|string'
         ]); 
+
+        // echo $request->code . " code<br>";
+        // echo $request->name . " name<br>";
+        // echo $request->type . " type<br>";
+        // echo $request->amount . " amount<br>";
+        // echo $request->price . " price<br>";
+        // echo $request->exp . " exp<br>";
+        // echo $request->Pseller . " Pseller<br>";
+        // echo $request->Ptyseller . "Ptyseller<br>";
+        // echo $request->Phseller . "Phseller<br>";
+        // echo $request->dateimport . "dateimport<br>";
 
         $createProduct = productModel::create([
             'fd_code' => $request->code,
@@ -27,37 +42,46 @@ class CRUDController extends Controller
             'fd_type' => $request->type,
             'fd_amount' => $request->amount,
             'fd_price' => $request->price,
-            'fd_updated_datetime' => '0000-00-00 00:00:00',
-            'fd_created_datetime' => $request->import_datetime,
+            'fd_created_datetime' => $request->dateimport,
+            'fd_updated_datetime' => $request->dateimport,
         ]);
         $saveExpriced = expiredModel::create([
             'fd_code' => $request->code,
             'fd_name' => $request->name,
             'fd_type' => $request->type,
             'fd_amount' => $request->amount,
-            'exp' => $request->exp,
-            'fd_updated_datetime' => '0000-00-00 00:00:00',
-            'fd_created_datetime' => $request->import_datetime,
+            'fd_expired_datetime' => $request->exp,
+            'fd_created_datetime' => $request->dateimport,
+            'fd_updated_datetime' => $request->dateimport,
         ]);
         $saveseller = sellerModel::create([
-            'fd_name' => $request->name,
-            'fd_phone' => $request->phone,
-            'fd_type' => $request->type,
-            'fd_updated_datetime' => '0000-00-00 00:00:00',
-            'fd_created_datetime' => $request->import_datetime,
+            'fd_name' => $request->Pseller,
+            'fd_phone' => $request->Phseller,
+            'fd_type' => $request->Ptyseller,
+            'fd_created_datetime' => $request->dateimport,
+            'fd_updated_datetime' => $request->dateimport,
         ]);
-
-        if($createProduct AND $saveExpriced){
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Create product success'
-            ]);
-        }else{
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Create product failed'
-            ]);
+        $saveHistory = historyModel::create([
+            'fd_code' => $request->code,
+            'fd_name' => $request->name,
+            'fd_type' => $request->type,
+            'fd_amount' => $request->amount,
+            'fd_price' => $request->price,
+            'fd_by' => $request->by,
+            'fd_action' => 1,
+            'fd_status' => 1,
+            'fd_created_datetime' => $request->dateimport,
+        ]);
+        
+        if($validator->fails()){
+            return redirect('create')->withErrors($validator)->withInput();
         }
+
+        if($createProduct && $saveExpriced && $saveseller && $saveHistory){
+            return redirect('create')->with('success', 'Create Success');
+        }
+
+
     }
 
     function show(){

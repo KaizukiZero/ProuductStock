@@ -16,6 +16,7 @@ class sellerModel extends Model
         'fd_type',
         'fd_updated_datetime',
         'fd_created_datetime'
+
     ];
     const CREATED_AT = 'fd_created_datetime';
     const UPDATED_AT = 'fd_updated_datetime';

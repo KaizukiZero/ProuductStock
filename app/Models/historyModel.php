@@ -22,5 +22,6 @@ class historyModel extends Model
         'fd_created_datetime'
     ];
     const CREATED_AT = 'fd_created_datetime';
+    const UPDATED_AT = null;
     // End Config
 }
