@@ -43,11 +43,11 @@ class CoreController extends Controller
 
     }
 
-    public function salercontact()
+    public function sellercontact()
 
     {
 
-        return view('salercontact');
+        return view('sellercontact');
 
     }
 

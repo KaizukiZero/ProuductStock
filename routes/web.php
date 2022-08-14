@@ -28,13 +28,13 @@ Route::get('/edit', [CoreController::class, 'edit']);
 Route::get('/list', [CoreController::class, 'list']);
 Route::get('/create', [CoreController::class, 'create']);
 Route::get('/history', [CoreController::class, 'history']);
-Route::get('/salercontact', [CoreController::class, 'salercontact']);
+Route::get('/sellercontact', [CoreController::class, 'sellercontact']);
 
 //CURDControllers
-Route::post('/creating', [CRUDController::class, 'create']);
-Route::get('/show/{id}', [CRUDController::class, 'show']);
-Route::put('/updating/{id}', [CRUDController::class, 'update']);
-Route::delete('/delete/{id}', [CRUDController::class, 'destroy']);
+Route::post('/creating', [CRUDController::class, 'create'])->name('creating');
+Route::get('/product/{id}', [CRUDController::class, 'show'])->name('showitem');
+Route::put('/updating/{id}', [CRUDController::class, 'update'])->name('updating');
+Route::delete('/delete/{id}', [CRUDController::class, 'destroy'])->name('deleteproduct');
 
 //LangControllers
 Route::get('/change', [LangController::class, 'change'])->name('changeLang');

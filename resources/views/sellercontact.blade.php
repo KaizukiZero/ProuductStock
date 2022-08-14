@@ -1,10 +1,10 @@
 @extends('master')
-@section('title', 'SalerContact Page')
+@section('title', 'Seller Contact Page')
 
 @section('content')
 <div class="main p-3">
     <div class="fs-1">
-        <span>List Saler/Company Contact</span>
+        <span>List Seller/Company Contact</span>
     </div>
     <div class="table-responsive">
         <table class="table">
@@ -16,7 +16,7 @@
                     <th>Phone</th>
                     <th>Lasted</th>
                     <th>Import</th>
-                    <th>action</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>

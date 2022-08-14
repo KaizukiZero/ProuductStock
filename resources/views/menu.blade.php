@@ -27,10 +27,7 @@
                 <a href="/history" class="nav-link px-sm-3 px-2 ">
                     <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline ">{{ __('msg.history') }}</span>
                 </a>
-                {{-- <a href="/about" class="nav-link px-sm-3 px-2 ">
-                    <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline ">{{ __('msg.about') }}</span>
-                </a> --}}
-                <a href="/salercontact" class="nav-link px-sm-3 px-2 ">
+                <a href="/sellercontact" class="nav-link px-sm-3 px-2 ">
                     <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline ">{{ __('msg.contact') }}</span>
                 </a>
             </li>
