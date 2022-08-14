@@ -53,6 +53,18 @@ return new class extends Migration
             // INDEX CONFIG
             $table->index(['fd_pid','fd_created_datetime'],'ht_index');
         });
+        Schema::create('tb_expired', function (Blueprint $table) {
+            // CREATE TABLE
+            $table->bigIncrements('fd_id');
+            $table->bigInteger('fd_pid');
+            $table->string('fd_name',64);
+            $table->string('fd_type',32);
+            $table->decimal('fd_amount',8,2);
+            $table->timestampTz('fd_expired_datetime');
+            $table->timestampTz('fd_created_datetime');
+            // INDEX CONFIG
+            $table->index(['fd_pid','fd_created_datetime'],'exp_index');
+        });
         Schema::create('tb_saler', function (Blueprint $table) {
             // CREATE TABLE
             $table->bigIncrements('fd_id');
