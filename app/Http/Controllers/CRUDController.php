@@ -18,7 +18,7 @@ class CRUDController extends Controller
             'fd_amount' => 'required|integer',
             'fd_price' => 'required|integer',
             'fd_expired_datetime' => 'required|date',
-        ]);
+        ]); 
 
         $createProduct = productModel::create([
             'fd_code' => $request->fd_code,
