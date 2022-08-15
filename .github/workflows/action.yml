@@ -25,8 +25,8 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: 16
-      run: npm ci
-      run: npm test
+    - run: npm ci
+    - run: npm test
     - name: Generate key
       run: php artisan key:generate
     - name: Directory Permissions
