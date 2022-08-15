@@ -27,7 +27,7 @@ jobs:
     - name: php ${{ matrix.php }} Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - name: Install Composer
-      run: composer install --prefer-dist --no-progress --no-suggest
+      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
     - name: Node ${{ matrix.node }} testing
       run: npm ci
