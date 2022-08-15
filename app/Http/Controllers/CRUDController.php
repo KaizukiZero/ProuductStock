@@ -104,8 +104,8 @@ class CRUDController extends Controller
         }
 
         if($checkproduct != 0 || $checkexpired != 0 || $checkseller != 0){
-            return back()->withErrors('มีข้อมูลของ สินค้า,วันหมดอายุ และ ผู้ขายอยู่แล้ว ')->withInput()
-                         ->with('success','สร้างประวัติการนำเข้าสินค้าเรียบร้อย');;
+            return back()->withErrors('Duplicate Product , Expired And Seller')->withInput()
+                         ->with('success','History Added');;
         }else{
             $createProduct->save();
             $saveExpired->save();
