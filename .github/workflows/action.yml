@@ -8,11 +8,12 @@ on:
 
 jobs:
    Laravel_Run_On_Ubuntu:
+    name: Testing Laravel On Ubuntu
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node: [ 14, 16, 18 ],
+        node: [ 14, 16, 18 ]
         php: [ 8.1, 8.0, 7.4 ]
       
     steps:
