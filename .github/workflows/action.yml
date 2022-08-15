@@ -10,24 +10,29 @@ jobs:
    Laravel_Run_On_Ubuntu:
     name: testing OS ubuntu
     runs-on: ubuntu-latest
-
+    strategy:
+          matrix:
+            node: [ 14, 16, 18 ]
+            php: [ 8.1, 8.0, 7.4 ]
     steps:
+    - uses: actions/checkout@v3
     - uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.1'
-    - uses: actions/checkout@v3
+        php-version: "${{ matrix.php }}"
+
+    - uses: actions/setup-node@v3
+        with:
+          node-version: "${{ matrix.node }}"
     
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - name: Install Composer
       run: composer install --prefer-dist --no-progress --no-suggest
-    
-      name: Install Nodejs
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 16
-    - run: npm ci
-    - run: npm test
+
+    - name: Install Nodejs
+      run: npm ci
+      run: npm test
+      
     - name: Generate key
       run: php artisan key:generate
     - name: Directory Permissions
