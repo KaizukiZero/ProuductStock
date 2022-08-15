@@ -11,6 +11,7 @@ class historyModel extends Model
     protected $table = 'tb_history';
     protected $primaryKey = 'fd_id';
     protected $fillable = [
+        'fd_pid',
         'fd_code',
         'fd_name',
         'fd_type',

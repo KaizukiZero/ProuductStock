@@ -30,6 +30,7 @@ return new class extends Migration
         Schema::create('tb_history', function (Blueprint $table) {
             // CREATE TABLE
             $table->bigIncrements('fd_id');
+            $table->string('fd_pid',64)->uniqid();
             $table->string('fd_code',64)->uniqid();
             $table->string('fd_name',64)->uniqid();
             $table->string('fd_type',32);
@@ -37,6 +38,7 @@ return new class extends Migration
             $table->double('fd_price',8,2);
             $table->string('fd_by',16);
             $table->tinyInteger('fd_action');
+
             $table->tinyInteger('fd_status')->default(1);
             $table->timestampTz('fd_created_datetime');
             // INDEX CONFIG

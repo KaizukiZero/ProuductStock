@@ -13,6 +13,9 @@ class CRUDController extends Controller
 {
     function create(Request $request){
 
+        $covert_date = strtotime($request->dateimport);
+        $pid = $request->code . $request->type . $covert_date;
+
         $validator = Validator::make($request->all(), [
             'code' => 'required|string',
             'name' => 'required|string',
@@ -24,7 +27,60 @@ class CRUDController extends Controller
             'Ptyseller' => 'required|string',
             'Phseller' => 'required|string'
         ]); 
+ 
+        if($validator->fails()){
+            return back()->withErrors($validator)->withInput();
+        }
 
+        $createProduct = new productModel;
+        $saveExpired = new expiredModel;
+        $saveSeller = new sellerModel;
+        $saveHistory = new historyModel;
+        
+        // Create Product
+        $createProduct->fd_code = $request->code;
+        $createProduct->fd_name = $request->name;
+        $createProduct->fd_type = $request->type;
+        $createProduct->fd_amount = $request->amount;
+        $createProduct->fd_price = $request->price;
+        $createProduct->fd_updated_datetime = $request->dateimport;
+        $createProduct->fd_created_datetime = $request->dateimport;
+        
+        // Save Expired
+        $saveExpired->fd_code = $request->code;
+        $saveExpired->fd_name = $request->name;
+        $saveExpired->fd_type = $request->type;
+        $saveExpired->fd_amount = $request->amount;
+        $saveExpired->fd_expired_datetime = $request->exp;
+        $saveExpired->fd_created_datetime = $request->dateimport;
+        $saveExpired->fd_updated_datetime = $request->dateimport;
+
+        // Save Seller
+        $saveSeller->fd_name = $request->Pseller;
+        $saveSeller->fd_type = $request->Ptyseller;
+        $saveSeller->fd_phone = $request->Phseller;
+        $saveSeller->fd_created_datetime = $request->dateimport;
+        $saveSeller->fd_updated_datetime = $request->dateimport;
+
+        // Save History
+        $saveHistory->fd_pid = $pid;
+        $saveHistory->fd_code = $request->code;
+        $saveHistory->fd_name = $request->name;
+        $saveHistory->fd_type = $request->type;
+        $saveHistory->fd_amount = $request->amount;
+        $saveHistory->fd_price = $request->price;
+        $saveHistory->fd_by = $request->by;
+        $saveHistory->fd_action = 1;
+        $saveHistory->fd_status = 1;
+        $saveHistory->fd_created_datetime = $request->dateimport;
+
+        
+        $checkproduct = productModel::where('fd_code',$request->code)->count();
+        $checkexpired = expiredModel::where('fd_code',$request->code)->count();
+        $checkseller = sellerModel::where('fd_phone',$request->Phseller)->count();
+        $checkhistory = historyModel::where('fd_pid',$pid)->count();
+
+        //Debug
         // echo $request->code . " code<br>";
         // echo $request->name . " name<br>";
         // echo $request->type . " type<br>";
@@ -35,52 +91,28 @@ class CRUDController extends Controller
         // echo $request->Ptyseller . "Ptyseller<br>";
         // echo $request->Phseller . "Phseller<br>";
         // echo $request->dateimport . "dateimport<br>";
-
-        $createProduct = productModel::create([
-            'fd_code' => $request->code,
-            'fd_name' => $request->name,
-            'fd_type' => $request->type,
-            'fd_amount' => $request->amount,
-            'fd_price' => $request->price,
-            'fd_created_datetime' => $request->dateimport,
-            'fd_updated_datetime' => $request->dateimport,
-        ]);
-        $saveExpriced = expiredModel::create([
-            'fd_code' => $request->code,
-            'fd_name' => $request->name,
-            'fd_type' => $request->type,
-            'fd_amount' => $request->amount,
-            'fd_expired_datetime' => $request->exp,
-            'fd_created_datetime' => $request->dateimport,
-            'fd_updated_datetime' => $request->dateimport,
-        ]);
-        $saveseller = sellerModel::create([
-            'fd_name' => $request->Pseller,
-            'fd_phone' => $request->Phseller,
-            'fd_type' => $request->Ptyseller,
-            'fd_created_datetime' => $request->dateimport,
-            'fd_updated_datetime' => $request->dateimport,
-        ]);
-        $saveHistory = historyModel::create([
-            'fd_code' => $request->code,
-            'fd_name' => $request->name,
-            'fd_type' => $request->type,
-            'fd_amount' => $request->amount,
-            'fd_price' => $request->price,
-            'fd_by' => $request->by,
-            'fd_action' => 1,
-            'fd_status' => 1,
-            'fd_created_datetime' => $request->dateimport,
-        ]);
+        // echo $pid . " pid<br>";
+        // echo $covert_date . " covert_date<br>";
+        // echo $checkproduct . " product<br>";
+        // echo $checkexpired . " expired<br>";
+        // echo $checkseller . " seller<br>";
+        // echo $checkhistory . " history<br>";
+        //End Debug
         
-        if($validator->fails()){
-            return redirect('create')->withErrors($validator)->withInput();
+        if($checkhistory == 0){
+            $saveHistory->save();
         }
 
-        if($createProduct && $saveExpriced && $saveseller && $saveHistory){
-            return redirect('create')->with('success', 'Create Success');
+        if($checkproduct != 0 || $checkexpired != 0 || $checkseller != 0){
+            return back()->withErrors('มีข้อมูลของ สินค้า,วันหมดอายุ และ ผู้ขายอยู่แล้ว ')->withInput()
+                         ->with('success','สร้างประวัติการนำเข้าสินค้าเรียบร้อย');;
+        }else{
+            $createProduct->save();
+            $saveExpired->save();
+            $saveSeller->save();
+            return back()->with('success','Data has been added');
+    
         }
-
 
     }
 
