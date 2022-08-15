@@ -24,7 +24,7 @@ jobs:
       with:
         node-version: ${{ matrix.node }}
     
-    - name: php ${{ $matrix.php }} Copy .env
+    - name: php ${{ matrix.php }} Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       run: php -v
     - name: Install Composer
