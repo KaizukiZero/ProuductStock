@@ -34,8 +34,8 @@ jobs:
     - uses: actions/setup-node@v3
       with:
           node-version: ${{ matrix.node }}
-    - run: npm ci
-    - run: npm test
+      run: npm ci
+      run: npm test
 
     - name: Generate key
       run: php artisan key:generate
