@@ -22,7 +22,7 @@ jobs:
     - name: Install Composer
       run: composer install --prefer-dist --no-progress --no-suggest
     
-    name: Install Nodejs
+      name: Install Nodejs
     - uses: actions/setup-node@v3
       with:
         node-version: 16
