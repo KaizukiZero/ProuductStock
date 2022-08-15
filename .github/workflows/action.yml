@@ -18,18 +18,19 @@ jobs:
     - uses: actions/checkout@v3
     - uses: shivammathur/setup-php@v2
       with:
-        php-version: "${{ matrix.php }}"
+        php-version: ${{ matrix.php }}
 
     - uses: actions/setup-node@v3
         with:
-          node-version: "${{ matrix.node }}"
+          node-version: ${{ matrix.node }}
     
-    - name: Copy .env
+    - name: php ${{ $matrix.php }} Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      run: php -v
     - name: Install Composer
       run: composer install --prefer-dist --no-progress --no-suggest
 
-    - name: Install Nodejs
+    - name: Node ${{ matrix.node }} testing
       run: npm ci
       run: npm test
       
