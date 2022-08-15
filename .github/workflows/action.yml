@@ -26,13 +26,11 @@ jobs:
     
     - name: php ${{ matrix.php }} Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-      run: php -v
     - name: Install Composer
       run: composer install --prefer-dist --no-progress --no-suggest
 
     - name: Node ${{ matrix.node }} testing
       run: npm ci
-      run: npm test
       
     - name: Generate key
       run: php artisan key:generate
