@@ -9,7 +9,7 @@ on:
 jobs:
    Laravel_Run_On_Ubuntu:
     name: testing OS ubuntu
-    runs-on: ubuntu-latest,
+    runs-on: ubuntu-latest
 
     steps:
     - uses: shivammathur/setup-php@2
