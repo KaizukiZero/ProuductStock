@@ -16,21 +16,24 @@ class CRUDController extends Controller
         $covert_date = strtotime($request->dateimport);
         $pid = $request->code . $request->type . $covert_date;
 
+        // if($request->action == ""){
+        //     $check = $validation->errors()->first('action');
+        //     return back()->withErrors($check)->withInput();
+        // }
+
         $validator = Validator::make($request->all(), [
+            'action' => 'required|string',
             'code' => 'required|string',
             'name' => 'required|string',
-            'type' => 'required|string',
             'amount' => 'required|integer',
             'price' => 'required|integer',
-            'exp' => 'required|date',
-            'Pseller' => 'required|string',
-            'Ptyseller' => 'required|string',
-            'Phseller' => 'required|string'
+            'type' => 'required|string',
+            'SellerName' => 'required|string',
+            'SellerType' => 'required|string',
+            'SellerPhone' => 'required|string'
         ]); 
- 
-        if($validator->fails()){
-            return back()->withErrors($validator)->withInput();
-        }
+
+        $validated = $validator->validate();
 
         $createProduct = new productModel;
         $saveExpired = new expiredModel;

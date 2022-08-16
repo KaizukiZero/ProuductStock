@@ -4,7 +4,7 @@
 @section('content')
 <div class="main p-3 text-capitalize">
     <div class="fs-1">
-        <span>create product items</span>
+        <span>Create / Import Product</span>
     </div>
 
     @if ($message = Session::get('success'))
@@ -27,9 +27,25 @@
     <form action="{{ route('creating') }}" method="post">
         @csrf
         <div class="my-3 p-3 border rounded">
-            <div class="fs-3 mb-2">Product Import</div>
-            <div class="row align-items-center">
+            <div class="fs-3 mb-2">
+                
+                <div class="row align-items-center">
+                    <div class="col-md-4">Product Data</div>
+                    <div class="col-md-4">
+                        <div class="form-floating my- my-sm-0">
+                            <select class="form-select lable-size" id="action" name="action">
+                                <option value="" selected>Select Action</option>
+                                <option value="Create">Create</option>
+                                <option value="Import">Import</option>
+                            </select>
+                            <label for="action" class="lable-size">Action</label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
             
+            <div class="row align-items-center">
                 <div class="col-sm-4 col-12">
                     <div class="form-floating my-2 my-sm-0">
                         <input type="text" class="form-control" id="Pcode" placeholder="Product Code" name="code" value="">
@@ -59,7 +75,7 @@
                 <div class="col-sm-6 col-12">
                     <div class="form-floating my-2 my-sm-0">
                         <select class="form-select lable-size" id="Ptype" name="type">
-                            <option value="000" selected>Choose Product Type</option>
+                            <option value="" selected>Choose Product Type</option>
                             <option value="100">Snack</option>
                             <option value="200">Drink</option>
                             <option value="300">Milk</option>
@@ -90,14 +106,14 @@
 
             <div class="col-sm-4 col-12">
                 <div class="form-floating my-2 my-sm-0">
-                    <input type="text" class="form-control" id="PSeller" placeholder="Product Seller" name="Pseller" value="">
-                    <label for="PSeller" class="lable-size">Product Seller / Company</label>
+                    <input type="text" class="form-control" id="PSeller" placeholder="Product Seller" name="SellerName" value="">
+                    <label for="PSeller" class="lable-size">Seller / Company Name</label>
                 </div>
             </div>
             <div class="col-sm-4 col-12">
                 <div class="form-floating my-2 my-sm-0">
-                    <select class="form-select lable-size" id="PtySeller" name="Ptyseller">
-                        <option value="000" selected>What Seller Sold</option>
+                    <select class="form-select lable-size" id="PtySeller" name="SellerType">
+                        <option value="" selected>What is Sold</option>
                         <option value="100">Snack</option>
                         <option value="200">Drink</option>
                         <option value="300">Milk</option>
@@ -106,13 +122,13 @@
                         <option value="600">Noodles</option>
                         <option value="999">Other</option>
                     </select>
-                    <label for="PtySeller" class="lable-size">Seller Type</label>
+                    <label for="PtySeller" class="lable-size">Seller / Company Sold</label>
                 </div>
             </div>
             <div class="col-sm-4 col-12">
                 <div class="form-floating my-2 my-sm-0">
-                    <input type="text" class="form-control" id="PhSeller" placeholder="Seller Phone" name="Phseller" value="">
-                    <label for="PhSeller" class="lable-size">Phone Seller / Company</label>
+                    <input type="text" class="form-control" id="PhSeller" placeholder="Seller Phone" name="SellerPhone" value="">
+                    <label for="PhSeller" class="lable-size">Seller / Company Phone</label>
                 </div>
             </div>
         </div>
