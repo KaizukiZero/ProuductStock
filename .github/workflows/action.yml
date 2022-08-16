@@ -23,6 +23,7 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node }}
+        cache: 'npm'
     
     - name: php ${{ matrix.php }} Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
