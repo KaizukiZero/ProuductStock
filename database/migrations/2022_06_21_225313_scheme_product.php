@@ -31,14 +31,15 @@ return new class extends Migration
             // CREATE TABLE
             $table->bigIncrements('fd_id');
             $table->string('fd_pid',64)->uniqid();
-            $table->string('fd_code',64)->uniqid();
-            $table->string('fd_name',64)->uniqid();
+            $table->string('fd_code',64);
+            $table->string('fd_name',64);
             $table->string('fd_type',32);
             $table->decimal('fd_amount',8,2);
             $table->double('fd_price',8,2);
+            $table->date('fd_expired_datetime');
+            $table->string('fd_seller_name',64);
             $table->string('fd_by',16);
             $table->tinyInteger('fd_action');
-
             $table->tinyInteger('fd_status')->default(1);
             $table->timestampTz('fd_created_datetime');
             // INDEX CONFIG
@@ -48,7 +49,7 @@ return new class extends Migration
             // CREATE TABLE
             $table->bigIncrements('fd_id');
             $table->string('fd_code',64)->uniqid();
-            $table->string('fd_name',64)->uniqid();
+            $table->string('fd_name',64);
             $table->string('fd_type',32);
             $table->decimal('fd_amount',8,2);
             $table->date('fd_expired_datetime');

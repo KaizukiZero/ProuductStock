@@ -2,41 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\historyModel;
+use App\Models\productModel;
 
 class CoreController extends Controller
 {
     public function index()
-
     {
 
         return view('index');
 
     }
     public function edit()
-
     {
 
         return view('edit');
 
     }
     public function view()
-
     {
 
         return view('view');
 
     }
-    public function list()
+    function list() {
 
-    {
-
-        return view('list');
+        $loadProduct = productModel::all();
+        return view('list', compact('loadProduct'));
 
     }
 
     public function history()
-
     {
 
         return view('history');
@@ -44,7 +40,6 @@ class CoreController extends Controller
     }
 
     public function sellercontact()
-
     {
 
         return view('sellercontact');
@@ -52,14 +47,10 @@ class CoreController extends Controller
     }
 
     public function create()
-
     {
 
         return view('create');
 
     }
-
-
-
 
 }

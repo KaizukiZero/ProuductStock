@@ -20,9 +20,38 @@ class historyModel extends Model
         'fd_by',
         'fd_action',
         'fd_status',
+        'fd_seller_name',
+        'fd_exprired_datetime',
         'fd_created_datetime'
     ];
     const CREATED_AT = 'fd_created_datetime';
     const UPDATED_AT = null;
+
+    
+
+    public function scopeHisC($query,$pid,$req)
+    {
+
+        $data = [
+            'fd_pid' => $pid,
+            'fd_action' => 2,
+            'fd_status' => 1,
+            'fd_code' => $req->code,
+            'fd_name' => $req->name,
+            'fd_type' => $req->type,
+            'fd_amount' => $req->amount,
+            'fd_price' => $req->price,
+            'fd_seller_name' => $req->SellerName,
+            'fd_by' => $req->by,
+            'fd_expired_datetime' => $req->exp,
+            'fd_created_datetime' => $req->dateimport
+        ];
+
+        $query->insert($data);
+
+        return true;
+
+    }
+
     // End Config
 }
