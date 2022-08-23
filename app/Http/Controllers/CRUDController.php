@@ -17,11 +17,6 @@ class CRUDController extends Controller
         $covert_date = strtotime($request->dateimport);
         $pid = $request->code . $request->type . $covert_date;
 
-        $checkproduct = productModel::where('fd_code', $request->code)->count();
-        $checkexpired = expiredModel::where('fd_code', $request->code)->count();
-        $checkseller = sellerModel::where('fd_phone', $request->Phseller)->count();
-        $checkhistory = historyModel::where('fd_pid', $pid)->count();
-
         $validator = Validator::make($request->all(), [
             'action' => 'required|string',
             'code' => 'required|string',
@@ -36,70 +31,32 @@ class CRUDController extends Controller
 
         $validated = $validator->validate();
 
-        $createProduct = new productModel;
-        $saveExpired = new expiredModel;
-        $saveSeller = new sellerModel;
-        $saveHistory = new historyModel;
-
         if ($request->action == "Create") {
 
-            if ($checkproduct != 0 || $checkexpired != 0 || $checkseller != 0) {
-
-                return back()->withErrors('Product or Seller or Expired is already exist')->withInput();
-            } else {
-
-                $createProduct = productModel::create([
-                    'fd_code' => $request->code,
-                    'fd_name' => $request->name,
-                    'fd_amount' => $request->amount,
-                    'fd_price' => $request->price,
-                    'fd_type' => $request->type,
-                    'fd_updated_datetime' => $request->dateimport,
-                    'fd_created_datetime' => $request->dateimport,
-                ]);
-
-                // Create Expired
-                $saveExpired = expiredModel::create([
-                    'fd_code' => $request->code,
-                    'fd_name' => $request->name,
-                    'fd_amount' => $request->amount,
-                    'fd_type' => $request->type,
-                    'fd_expired_datetime' => $request->exp,
-                    'fd_updated_datetime' => $request->dateimport,
-                    'fd_created_datetime' => $request->dateimport,
-                ]);
-
-                // Create Seller
-                $saveSeller = sellerModel::create([
-                    'fd_name' => $request->SellerName,
-                    'fd_type' => $request->SellerType,
-                    'fd_phone' => $request->SellerPhone,
-                    'fd_updated_datetime' => $request->dateimport,
-                    'fd_created_datetime' => $request->dateimport,
-                ]);
-
-                // Create History
-                $saveHistory = historyModel::create([
-                        'fd_pid' => $pid,
-                        'fd_status' => 1,
-                        'fd_action' => 1,
-                        'fd_code' => $request->code,
-                        'fd_name' => $request->name,
-                        'fd_amount' => $request->amount,
-                        'fd_price' => $request->price,
-                        'fd_type' => $request->type,
-                        'fd_by' => $request->by,
-                        'fd_exprired_datetime' => $request->exp,
-                        'fd_created_datetime' => $request->dateimport,
-                ]);
-                return back()->with('success', 'Create Success');
+            $createProduct = productModel::CreateProduct($request);
+            if ($createProduct != 1) {
+                return back()->withErrors('Product already exist')->withInput();
             }
 
+            $createExp = expiredModel::CreateExp($request);
+            if ($createExp != 1) {
+                return back()->withErrors('Product Expired already exist')->withInput();
+            }
+
+            $createHistory = historyModel::CreateHistory($pid, $request);
+            if ($createHistory != 1) {
+                return back()->withErrors('History already exist')->withInput();
+            }
+
+            $createSeller = sellerModel::CreateSeller($request);
+            
+            return back()->with('success', 'Product Craete Success!');
         }
 
-        if($request->action == "Import"){
+        if ($request->action == "Import") {
             // Import Product
-            $this->edit($request, $request->code);
+            $res = $this->edit($request, $request->code);
+            return $res;
         }
 
         //Debug
@@ -129,73 +86,62 @@ class CRUDController extends Controller
 
     }
 
-    public function edit(Request $request,$id)
+    public function edit(Request $request, $id)
     {
 
         $covert_date = strtotime($request->dateimport);
         $pid = $request->code . $request->type . $covert_date;
 
-        // $updateProduct = productModel::where('fd_code', $id)->update([
-        //     'fd_name' => $request->name,
-        //     'fd_amount' => $request->amount,
-        //     'fd_price' => $request->price,
-        //     'fd_type' => $request->type,
-        //     'fd_updated_datetime' => $request->dateimport,
-        // ]);
+        $check = productModel::where('fd_code', $id)->count();
+        // 0 = count 1 / 1 = count 0
+        if ($check != 1){
+            return back()->withErrors('Product No Data')->withInput();
+        }
 
-        // $updateExpired = expiredModel::where('fd_code', $id)->update([
-        //     'fd_name' => $request->name,
-        //     'fd_amount' => $request->amount,
-        //     'fd_type' => $request->type,
-        //     'fd_expired_datetime' => $request->exp,
-        //     'fd_updated_datetime' => $request->dateimport,
-        // ]);
+        $getAmount = productModel::find($id)->fd_amount;
+        $covert = floatval($request->amount);
+        $updateAmount = $covert + $getAmount;
 
-        // $updateSeller = sellerModel::where('fd_phone', $request->Phseller)->update([
-        //     'fd_name' => $request->SellerName,
-        //     'fd_type' => $request->SellerType,
-        //     'fd_phone' => $request->SellerPhone,
-        //     'fd_updated_datetime' => $request->dateimport,
-        // ]);
+        $updateProduct = productModel::where('fd_code', $id)->update([
+            'fd_name' => $request->name,
+            'fd_amount' => $updateAmount,
+            'fd_price' => $request->price,
+            'fd_type' => $request->type,
+            'fd_updated_datetime' => $request->dateimport,
+        ]);
 
-        // $saveHistory = historyModel::create([
-        //     'fd_pid' => $pid,
-        //     'fd_status' => 1,
-        //     'fd_action' => 2,
-        //     'fd_code' => $id,
-        //     'fd_name' => $request->name,
-        //     'fd_amount' => $request->amount,
-        //     'fd_price' => $request->price,
-        //     'fd_type' => $request->type,
-        //     'fd_by' => $request->by,
-        //     'fd_exprired_datetime' => $request->exp,
-        //     'fd_created_datetime' => $request->dateimport,
-        // ]);
+        $check = expiredModel::where('fd_code', $id)->count();
+        // 0 = count 1 / 1 = count 0
+        if ($check != 1){
+            return back()->withErrors('Expired No Data')->withInput();
+        }
 
-        $saveHistory = historyModel::HisC($pid,$request);
+        $updateExpired = expiredModel::where('fd_code', $id)->update([
+            'fd_name' => $request->name,
+            'fd_amount' => $request->amount,
+            'fd_type' => $request->type,
+            'fd_expired_datetime' => $request->exp,
+            'fd_updated_datetime' => $request->dateimport,
+        ]);
+
+
+        $createSeller = sellerModel::CreateSeller($request);
+
+        $updateSeller = sellerModel::where('fd_phone', $request->SellerPhone)->update([
+            'fd_name' => $request->SellerName,
+            'fd_type' => $request->SellerType,
+            'fd_phone' => $request->SellerPhone,
+            'fd_updated_datetime' => $request->dateimport,
+        ]);
+
+        $saveHistory = historyModel::CreateHistory($pid, $request);
+        if ($saveHistory != 1) {
+            return back()->withErrors('Import Error')->withInput();
+        }
         // echo $pid;
 
-        print_r($saveHistory);
- 
-        // $validator = Validator::make($request->all(), [
-        //     'name' => 'required|string',
-        //     'type' => 'required|string',
-        //     'amount' => 'required|integer',
-        //     'price' => 'required|integer',
-        //     'exp' => 'required|date',
-        // ]);
-
-        // $product->name = $request->fd_name;
-        // $product->type = $request->fd_type;
-        // $product->amount = $request->fd_amount;
-        // $product->price = $request->fd_price;
-        // $product->fd_updated_datetime = date('Y-m-d H:i:s');
-
-        // $expired->name = $request->fd_name;
-        // $expired->type = $request->fd_type;
-        // $expired->amount = $request->fd_amount;
-        // $expired->exp = $request->fd_expired_datetime;
-        // $expired->fd_updated_datetime = date('Y-m-d H:i:s');
+        // print_r($saveHistory);
+        return back()->with('success', 'Import Success!');
     }
 
     public function destroy($id)

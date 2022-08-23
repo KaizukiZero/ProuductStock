@@ -29,9 +29,9 @@ class historyModel extends Model
 
     
 
-    public function scopeHisC($query,$pid,$req)
+    public function scopeCreateHistory($query,$pid,$req)
     {
-
+        $check = $query->where('fd_pid',$pid)->count();
         $data = [
             'fd_pid' => $pid,
             'fd_action' => 2,
@@ -47,10 +47,11 @@ class historyModel extends Model
             'fd_created_datetime' => $req->dateimport
         ];
 
-        $query->insert($data);
-
-        return true;
-
+        if($check != 1){
+            $result = $query->insert($data);
+            return $result;
+        }
+        return false;
     }
 
     // End Config

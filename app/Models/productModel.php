@@ -23,4 +23,23 @@ class productModel extends Model
     const UPDATED_AT = 'fd_updated_datetime';
     // End Config
 
+    public function scopeCreateProduct($query,$req)
+    {
+        $check = $query->where('fd_code', $req->code)->count();
+        $data = [
+            'fd_code' => $req->code,
+            'fd_name' => $req->name,
+            'fd_amount' => $req->amount,
+            'fd_price' => $req->price,
+            'fd_type' => $req->type,
+            'fd_updated_datetime' => $req->dateimport,
+            'fd_created_datetime' => $req->dateimport,
+        ];
+
+        if($check != 1){
+            $result = $query->insert($data);
+            return $result;
+        }
+        return false;
+    }
 }

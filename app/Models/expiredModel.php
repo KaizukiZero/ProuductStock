@@ -22,4 +22,24 @@ class expiredModel extends Model
     const CREATED_AT = 'fd_created_datetime';
     const UPDATED_AT = 'fd_updated_datetime';
     // End Config
+
+    public function scopeCreateExp($query,$req)
+    {
+        $check = $query->where('fd_code', $req->code)->count();
+        $data = [
+            'fd_code' => $req->code,
+            'fd_name' => $req->name,
+            'fd_amount' => $req->amount,
+            'fd_type' => $req->type,
+            'fd_expired_datetime' => $req->exp,
+            'fd_updated_datetime' => $req->dateimport,
+            'fd_created_datetime' => $req->dateimport,
+        ];
+
+        if($check != 1){
+            $result = $query->insert($data);
+            return $result;
+        }
+        return false;
+    }
 }

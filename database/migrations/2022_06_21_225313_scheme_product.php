@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('tb_product', function (Blueprint $table) {
             // CREATE TABLE
             $table->bigIncrements('fd_id');
-            $table->string('fd_code',64)->uniqid();
-            $table->string('fd_name',64)->uniqid();
+            $table->string('fd_code',64);
+            $table->string('fd_name',64);
             $table->string('fd_type',32);
             $table->decimal('fd_amount',8,2);
             $table->double('fd_price',8,2);
@@ -25,12 +25,12 @@ return new class extends Migration
             $table->timestampTz('fd_updated_datetime');
             $table->timestampTz('fd_created_datetime');
             // INDEX CONFIG
-            $table->index(['fd_code','fd_name'],'pd_index');
+            $table->unique(['fd_code','fd_name'],'pd_index');
         });
         Schema::create('tb_history', function (Blueprint $table) {
             // CREATE TABLE
             $table->bigIncrements('fd_id');
-            $table->string('fd_pid',64)->uniqid();
+            $table->string('fd_pid',64);
             $table->string('fd_code',64);
             $table->string('fd_name',64);
             $table->string('fd_type',32);
@@ -43,12 +43,12 @@ return new class extends Migration
             $table->tinyInteger('fd_status')->default(1);
             $table->timestampTz('fd_created_datetime');
             // INDEX CONFIG
-            $table->index(['fd_code','fd_name','fd_type','fd_status'],'ht_index');
+            $table->unique(['fd_pid','fd_code','fd_name','fd_type','fd_status'],'ht_index');
         });
         Schema::create('tb_expired', function (Blueprint $table) {
             // CREATE TABLE
             $table->bigIncrements('fd_id');
-            $table->string('fd_code',64)->uniqid();
+            $table->string('fd_code',64);
             $table->string('fd_name',64);
             $table->string('fd_type',32);
             $table->decimal('fd_amount',8,2);
@@ -56,29 +56,29 @@ return new class extends Migration
             $table->timestampTz('fd_updated_datetime');
             $table->timestampTz('fd_created_datetime');
             // INDEX CONFIG
-            $table->index(['fd_code'],'exp_index');
+            $table->unique(['fd_code'],'exp_index');
         });
         Schema::create('tb_seller', function (Blueprint $table) {
             // CREATE TABLE
             $table->bigIncrements('fd_id');
-            $table->string('fd_name',64)->uniqid();
+            $table->string('fd_name',64);
             $table->string('fd_type',32);
-            $table->string('fd_phone',16)->uniqid();
+            $table->string('fd_phone',16);
             $table->timestampTz('fd_updated_datetime');
             $table->timestampTz('fd_created_datetime');
             // INDEX CONFIG
-            $table->index(['fd_phone','fd_name','fd_type'],'sl_index');
+            $table->unique(['fd_phone','fd_name','fd_type'],'sl_index');
         });
         Schema::create('tb_admin', function (Blueprint $table) {
             // CREATE TABLE
             $table->bigIncrements('fd_id');
-            $table->string('fd_username',16)->uniqid();
+            $table->string('fd_username',16);
             $table->string('fd_password');
             $table->tinyInteger('fd_class');
             $table->json('fd_permission');
             $table->timestampTz('fd_created_datetime');
             // INDEX CONFIG
-            $table->index(['fd_username','fd_password','fd_class'],'ad_index');
+            $table->unique(['fd_username','fd_password','fd_class'],'ad_index');
         });
     }
 

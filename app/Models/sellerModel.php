@@ -21,4 +21,21 @@ class sellerModel extends Model
     const CREATED_AT = 'fd_created_datetime';
     const UPDATED_AT = 'fd_updated_datetime';
     // End Config
+    public function scopeCreateSeller($query,$req)
+    {
+        $check = $query->where('fd_phone', $req->SellerPhone)->count();
+        $data = [
+            'fd_name' => $req->SellerName,
+            'fd_type' => $req->SellerType,
+            'fd_phone' => $req->SellerPhone,
+            'fd_updated_datetime' => $req->dateimport,
+            'fd_created_datetime' => $req->dateimport,
+        ];
+
+        if($check != 1){
+            $result = $query->insert($data);
+            return $result;
+        }
+        return false;
+    }
 }
