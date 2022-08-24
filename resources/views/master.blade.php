@@ -1,3 +1,6 @@
+<?php 
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +15,7 @@
 
 <body>
 
-    <div class="container-fluid" >
+    <div class="container-fluid">
         <div class="row flex-nowrap">
             @include('menu')
             <div class="col py-3">
@@ -22,8 +25,10 @@
                     </div>
                     <div class="col-md-4">
                         <select class="form-control changeLang">
-                            <option value="en" {{ session()->get('locale') == 'en' ? 'selected' : '' }}>English</option>
-                            <option value="th" {{ session()->get('locale') == 'th' ? 'selected' : '' }}>Thailand</option>
+                            <option value="en" {{ session()->get('locale') == 'en' ? 'selected' : '' }}>English
+                            </option>
+                            <option value="th" {{ session()->get('locale') == 'th' ? 'selected' : '' }}>Thailand
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -36,36 +41,33 @@
 </body>
 <script src="{{ mix('/js/app.js') }}"></script>
 <script type="text/javascript">
-  
-  var default_today = "{{date('Y-m-d')}}";
+    var default_today = "{{ date('Y-m-d') }}";
     var url = "{{ route('changeLang') }}";
-  
-    $(".changeLang").change(function(){
-        window.location.href = url + "?lang="+ $(this).val();
+
+    $(".changeLang").change(function() {
+        window.location.href = url + "?lang=" + $(this).val();
     });
 
     function padTo2Digits(num) {
-    return num.toString().padStart(2, '0');
+        return num.toString().padStart(2, '0');
     }
 
     function formatDate(date) {
-    return (
-        [
-        date.getFullYear(),
-        padTo2Digits(date.getMonth() + 1),
-        padTo2Digits(date.getDate()),
-        ].join('-') +
-        ' ' +
-        [
-        padTo2Digits(date.getHours()),
-        padTo2Digits(date.getMinutes()),
-        padTo2Digits(date.getSeconds()),
-        ].join(':')
-    );
+        return (
+            [
+                date.getFullYear(),
+                padTo2Digits(date.getMonth() + 1),
+                padTo2Digits(date.getDate()),
+            ].join('-') +
+            ' ' + [
+                padTo2Digits(date.getHours()),
+                padTo2Digits(date.getMinutes()),
+                padTo2Digits(date.getSeconds()),
+            ].join(':')
+        );
     }
-
-  
 </script>
 
-    @yield('scr')
+@yield('scr')
+
 </html>

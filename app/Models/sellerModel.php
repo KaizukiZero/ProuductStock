@@ -35,7 +35,7 @@ class sellerModel extends Model
         if($check != 1){
             $result = $query->insert($data);
             return $result;
-        }
+        } 
         return false;
     }
 }

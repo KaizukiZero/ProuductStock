@@ -81,9 +81,9 @@ class CRUDController extends Controller
 
     }
 
-    public function show()
+    public function show($id)
     {
-
+        $getProduct = productModel::where('fd_id',$id);
     }
 
     public function edit(Request $request, $id)
@@ -111,7 +111,7 @@ class CRUDController extends Controller
         ]);
 
         $check = expiredModel::where('fd_code', $id)->count();
-        // 0 = count 1 / 1 = count 0
+        
         if ($check != 1){
             return back()->withErrors('Expired No Data')->withInput();
         }
@@ -146,8 +146,13 @@ class CRUDController extends Controller
 
     public function destroy($id)
     {
-        $product = productModel::find($id);
-        $product->delete();
+        $product = productModel::where('fd_id',$id);
+        // return $product;
+        $product->update([
+            'fd_status' => 0,
+            'fd_updated_datetime' => date('Y-m-d H:i:s')
+        ]);
+        // $product->delete();
 
         return back()->with('success', 'Product deleted!');
 

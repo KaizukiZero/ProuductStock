@@ -32,6 +32,7 @@ Route::get('/sellercontact', [CoreController::class, 'sellercontact']);
 
 //CURDControllers
 Route::post('/creating', [CRUDController::class, 'create'])->name('creating');
+Route::get('/editing' , [CRUDController::class, 'edit'])->name('editing');
 Route::get('/product/{id}', [CRUDController::class, 'show'])->name('showitem');
 Route::put('/updating/{id}', [CRUDController::class, 'update'])->name('updating');
 Route::delete('/delete/{id}', [CRUDController::class, 'destroy'])->name('deleteproduct');

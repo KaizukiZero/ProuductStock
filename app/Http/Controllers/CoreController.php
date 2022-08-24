@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Pagination\Paginator;
 use App\Models\historyModel;
 use App\Models\productModel;
 
@@ -27,9 +27,13 @@ class CoreController extends Controller
     }
     function list() {
 
-        $loadProduct = productModel::all();
-        return view('list', compact('loadProduct'));
+        Paginator::useBootstrapFive();
+        $check = productModel::paginate()->getOptions();
+        $result = productModel::where('fd_status', '=',1)->orderBy('fd_created_datetime', 'desc')->paginate(10);
+        // return $check;
+        
 
+        return view('list', compact('result'));
     }
 
     public function history()
