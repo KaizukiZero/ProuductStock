@@ -1,6 +1,6 @@
 @extends('master')
 @section('title', 'List Store Page')
-<?php $x = config('globals.inits.x'); 
+<?php $x = 1; 
 function typeis($id){
     switch ($id) {
         case 100:

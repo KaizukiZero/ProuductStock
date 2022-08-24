@@ -38,8 +38,11 @@ class CoreController extends Controller
 
     public function history()
     {
-
-        return view('history');
+        Paginator::useBootstrapFive();
+        $check = historyModel::paginate()->getOptions();
+        $result = historyModel::where('fd_status', '=',1)->orderBy('fd_created_datetime', 'desc')->paginate(10);
+        
+        return view('history', compact('result'));
 
     }
 

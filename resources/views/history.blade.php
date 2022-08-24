@@ -1,11 +1,54 @@
 @extends('master')
 @section('title', 'History Page')
-
+<?php $x = 1; 
+function typeis($id){
+    switch ($id) {
+        case 100:
+            return 'Snack';
+            break;
+        
+        default:
+            return 'No Founds';
+            break;
+    }
+}
+function byis($id){
+    switch ($id) {
+        case 1:
+            return 'Create';
+            break;
+        case 2:
+            return 'Import';
+            break;
+        default:
+            return 'No Founds';
+            break;
+    }
+}
+?>  
 @section('content')
-    <div class="main p-3">
+    <div class="main p-3 text-capitalize">
         <div class="fs-1">
-            <span>History Update Product</span>
+            <span>Table History Products</span>
         </div>
+
+        @if ($message = Session::get('success'))
+            <div class="alert alert-success">
+                {{ $message }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -14,53 +57,33 @@
                         <th>Name</th>
                         <th>Type</th>
                         <th>Amount</th>
-                        <th>Lasted</th>
-                        <th>Import</th>
+                        <th>Price</th>
+                        <th>Seller</th>
+                        <th>Added</th>
+                        <th>Product By</th>
+                        <th>Expired Day</th>
+                        <th>Created Day</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Product 1</td>
-                        <td>Type 1</td>
-                        <td>100</td>
-                        <td>2022-01-02 00:00:00</td>
-                        <td>2022-01-02 00:00:00</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Product 1</td>
-                        <td>Type 1</td>
-                        <td>100</td>
-                        <td>2022-01-02 00:00:00</td>
-                        <td>2022-01-02 00:00:00</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Product 1</td>
-                        <td>Type 1</td>
-                        <td>100</td>
-                        <td>2022-01-02 00:00:00</td>
-                        <td>2022-01-02 00:00:00</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Product 1</td>
-                        <td>Type 1</td>
-                        <td>100</td>
-                        <td>2022-01-02 00:00:00</td>
-                        <td>2022-01-02 00:00:00</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Product 1</td>
-                        <td>Type 1</td>
-                        <td>100</td>
-                        <td>2022-01-02 00:00:00</td>
-                        <td>2022-01-02 00:00:00</td>
-                    </tr>
+                    @foreach ($result as $key)
+                        <tr>
+                            <td>{{ $x }}</td>
+                            <td>{{ $key->fd_name }}</td>
+                            <td>{{ typeis($key->fd_type) }}</td>
+                            <td>{{ $key->fd_amount }}</td>
+                            <td>{{ $key->fd_price }}</td>
+                            <td>{{ $key->fd_seller_name }}</td>
+                            <td>{{ $key->fd_by }}</td>
+                            <td>{{ byis($key->fd_action) }}</td>
+                            <td>{{ $key->fd_expired_datetime }}</td>
+                            <td>{{ $key->fd_created_datetime }}</td>
+                        </tr>
+                        <?php $x++ ?>
+                    @endforeach
                 </tbody>
             </table>
+            {{ $result->onEachSide(0)->links() }}
         </div>
     </div>
 @endsection
