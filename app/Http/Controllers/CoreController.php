@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Pagination\Paginator;
+
 use App\Models\historyModel;
 use App\Models\productModel;
+use Illuminate\Pagination\Paginator;
 
 class CoreController extends Controller
 {
@@ -28,21 +29,20 @@ class CoreController extends Controller
     function list() {
 
         Paginator::useBootstrapFive();
-        $check = productModel::paginate()->getOptions();
-        $result = productModel::where('fd_status', '=',1)->orderBy('fd_created_datetime', 'desc')->paginate(10);
-        // return $check;
-        
+        $result = productModel::where('fd_status', '=', 1)->orderBy('fd_created_datetime', 'desc')->paginate(10);
+        $check = $result->count();
 
-        return view('list', compact('result'));
+        return view('list', compact('result','check'));
     }
 
     public function history()
     {
         Paginator::useBootstrapFive();
-        $check = historyModel::paginate()->getOptions();
-        $result = historyModel::where('fd_status', '=',1)->orderBy('fd_created_datetime', 'desc')->paginate(10);
+        $result = historyModel::where('fd_status', '=', 1)->orderBy('fd_created_datetime', 'desc')->paginate(10);
+        $check = $result->count();
         
-        return view('history', compact('result'));
+        return view('history', compact('result','check'));
+        
 
     }
 

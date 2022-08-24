@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('fd_code',64);
             $table->string('fd_name',64);
             $table->string('fd_type',32);
-            $table->decimal('fd_amount',8,2);
+            $table->double('fd_amount',8,2);
             $table->double('fd_price',8,2);
             $table->tinyInteger('fd_status')->default(1);
             $table->timestampTz('fd_updated_datetime');
@@ -34,7 +34,7 @@ return new class extends Migration
             $table->string('fd_code',64);
             $table->string('fd_name',64);
             $table->string('fd_type',32);
-            $table->decimal('fd_amount',8,2);
+            $table->double('fd_amount',8,2);
             $table->double('fd_price',8,2);
             $table->date('fd_expired_datetime');
             $table->string('fd_seller_name',64);
@@ -51,7 +51,7 @@ return new class extends Migration
             $table->string('fd_code',64);
             $table->string('fd_name',64);
             $table->string('fd_type',32);
-            $table->decimal('fd_amount',8,2);
+            $table->double('fd_amount',8,2);
             $table->date('fd_expired_datetime');
             $table->timestampTz('fd_updated_datetime');
             $table->timestampTz('fd_created_datetime');

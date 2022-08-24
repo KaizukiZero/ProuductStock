@@ -1,18 +1,20 @@
 @extends('master')
 @section('title', 'History Page')
-<?php $x = 1; 
-function typeis($id){
+<?php $x = 1;
+function typeis($id)
+{
     switch ($id) {
         case 100:
             return 'Snack';
             break;
-        
+
         default:
             return 'No Founds';
             break;
     }
 }
-function byis($id){
+function byis($id)
+{
     switch ($id) {
         case 1:
             return 'Create';
@@ -25,7 +27,8 @@ function byis($id){
             break;
     }
 }
-?>  
+// $result = [''];
+?>
 @section('content')
     <div class="main p-3 text-capitalize">
         <div class="fs-1">
@@ -66,6 +69,11 @@ function byis($id){
                     </tr>
                 </thead>
                 <tbody>
+                    @if ($check == 0)
+                        <tr>
+                            <td colspan="10">{{ 'No Data' }}</td>
+                        </tr>
+                    @endif
                     @foreach ($result as $key)
                         <tr>
                             <td>{{ $x }}</td>
@@ -79,11 +87,13 @@ function byis($id){
                             <td>{{ $key->fd_expired_datetime }}</td>
                             <td>{{ $key->fd_created_datetime }}</td>
                         </tr>
-                        <?php $x++ ?>
+                        <?php $x++; ?>
                     @endforeach
                 </tbody>
             </table>
-            {{ $result->onEachSide(0)->links() }}
+            @if ($check == 0)
+                {{ $result->onEachSide(0)->links() }}
+            @endif
         </div>
     </div>
 @endsection

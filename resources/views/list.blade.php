@@ -1,12 +1,13 @@
 @extends('master')
 @section('title', 'List Store Page')
-<?php $x = 1; 
-function typeis($id){
+<?php $x = 1;
+function typeis($id)
+{
     switch ($id) {
         case 100:
             return 'Snack';
             break;
-        
+
         default:
             return 'No Founds';
             break;
@@ -50,35 +51,35 @@ function typeis($id){
                     </tr>
                 </thead>
                 <tbody>
-                    
-                    @foreach ($result as $key)
-                        @if ($key->fd_id == '')
-                            <tr>
-                                <td colspan="8">{{ 'No Data' }}</td>
-                            </tr>
-                        @break;
+                    @if ($check == 0)
+                        <tr>
+                            <td colspan="10">{{ 'No Data' }}</td>
+                        </tr>
                     @endif
-                    <tr>
-                        <td>{{ $x }}</td>
-                        <td>{{ $key->fd_name }}</td>
-                        <td>{{ typeis($key->fd_type); }} </td>
-                        <td>{{ $key->fd_amount }}</td>
-                        <td>{{ $key->fd_price }}</td>
-                        <td>{{ $key->fd_created_datetime }}</td>
-                        <td>
-                            <form action="{{ route('deleteproduct', $key->fd_id) }}" method="POST">
-                                <a class="btn btn-info" href="{{ route('showitem', $key->fd_id) }}">Show</a>
-                                <a class="btn btn-primary" href="{{ route('editing', $key->fd_id) }}">Edit</a>
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                    <?php $x++; ?>
-                @endforeach
-        </table>
-        {{ $result->onEachSide(0)->links() }}
+                    @foreach ($result as $key)
+                        <tr>
+                            <td>{{ $x }}</td>
+                            <td>{{ $key->fd_name }}</td>
+                            <td>{{ typeis($key->fd_type) }} </td>
+                            <td>{{ $key->fd_amount }}</td>
+                            <td>{{ $key->fd_price }}</td>
+                            <td>{{ $key->fd_created_datetime }}</td>
+                            <td>
+                                <form action="{{ route('deleteproduct', $key->fd_id) }}" method="POST">
+                                    <a class="btn btn-info" href="{{ route('showitem', $key->fd_id) }}">Show</a>
+                                    <a class="btn btn-primary" href="{{ route('editing', $key->fd_id) }}">Edit</a>
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <?php $x++; ?>
+                    @endforeach
+            </table>
+            @if ($check == 0)
+                {{ $result->onEachSide(0)->links() }}
+            @endif
+        </div>
     </div>
-</div>
 @endsection
