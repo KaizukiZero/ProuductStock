@@ -83,7 +83,15 @@ class CRUDController extends Controller
 
     public function show($id)
     {
-        $getProduct = productModel::where('fd_id',$id);
+        $getProduct = productModel::where('fd_code',$id);
+        $getExp = expiredModel::where('fd_code',$id);
+        $data = [
+            'Product' => $getProduct,
+            'Exp' => $getExp
+        ];
+
+        return view('view.name', compact('data'));
+
     }
 
     public function edit(Request $request, $id)
