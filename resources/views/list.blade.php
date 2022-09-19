@@ -36,7 +36,7 @@ function typeis($id)
                 </ul>
             </div>
         @endif
-
+        <a href="product/001" class="btn btn-group" target="_blank">Test</a>
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -66,7 +66,10 @@ function typeis($id)
                             <td>{{ $key->fd_created_datetime }}</td>
                             <td>
                                 <form action="{{ route('deleteproduct', $key->fd_id) }}" method="POST">
-                                    <a class="btn btn-info" href="{{ route('showitem', $key->fd_id) }}">Show</a>
+                                    <button id="TEST" type="button" class="btn btn-primary" data-bs-toggle="modal" 
+                                    data-bs-code="{{$key->fd_code}}"
+                                        data-bs-target="#mainModal">Show</button>
+                                    {{-- <a class="btn btn-info" href="{{ route('showitem', $key->fd_id) }}">Show</a> --}}
                                     {{-- <a class="btn btn-primary" href="{{ route('editing', $key->fd_id) }}">Edit</a> --}}
                                     @csrf
                                     @method('DELETE')
@@ -80,31 +83,7 @@ function typeis($id)
             @if ($check == 0)
                 {{ $result->onEachSide(0)->links() }}
             @endif
-        </div>
-        <!-- Button trigger modal -->
-        <button id="TEST" type="button" class="btn btn-primary" data-bs-toggle="modal" 
-        data-bs-code="@if($check != 0){{$result->fd_code}}@endif"
-            data-bs-target="#staticBackdrop">Launch modal</button>
 
-        <!-- Modal -->
-        <form action="" method="post">
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            ...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Understood</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
+        </div>
+
     @endsection

@@ -154,7 +154,7 @@
         <button type="submit" class="btn btn-primary">Comfirm</button>
         <div type="buttom" class="btn btn-danger" id="Clear">Clear</div>
     </form>
-   
+    
 </div>
 @endsection
 
