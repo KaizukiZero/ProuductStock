@@ -1,6 +1,8 @@
 @extends('master')
 @section('title', 'History Page')
-<?php $x = 1;
+<?php 
+//easy way
+$x = 1;
 function typeis($id)
 {
     switch ($id) {

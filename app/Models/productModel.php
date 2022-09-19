@@ -16,6 +16,8 @@ class productModel extends Model
         'fd_type',
         'fd_amount',
         'fd_price',
+        'fd_lasted_seller',
+        'fd_lasted_by',
         'fd_updated_datetime',
         'fd_created_datetime'
     ];
@@ -32,6 +34,8 @@ class productModel extends Model
             'fd_amount' => $req->amount,
             'fd_price' => $req->price,
             'fd_type' => $req->type,
+            'fd_lasted_seller' => $req->SellerName,
+            'fd_lasted_by' => $req->by,
             'fd_updated_datetime' => $req->dateimport,
             'fd_created_datetime' => $req->dateimport,
         ];

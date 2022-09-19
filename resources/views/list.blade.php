@@ -1,6 +1,8 @@
 @extends('master')
 @section('title', 'List Store Page')
-<?php $x = 1;
+<?php 
+//easy way
+$x = 1;
 function typeis($id)
 {
     switch ($id) {

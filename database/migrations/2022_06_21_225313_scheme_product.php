@@ -21,7 +21,8 @@ return new class extends Migration
             $table->string('fd_type',32);
             $table->double('fd_amount',8,2);
             $table->double('fd_price',8,2);
-            $table->string('fd_seller',64);
+            $table->string('fd_lasted_seller',64);
+            $table->string('fd_lasted_by',64);
             $table->tinyInteger('fd_status')->default(1);
             $table->timestampTz('fd_updated_datetime');
             $table->timestampTz('fd_created_datetime');
