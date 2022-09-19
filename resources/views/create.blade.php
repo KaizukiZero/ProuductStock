@@ -133,23 +133,12 @@
             </div>
         </div>
         </div>
-
-        <div class="row align-items-center d-none">
-            <div class="col-sm-6 col-12">
-                <div class="form-floating my-2 my-sm-0">
-
-                    <input type="text" class="form-control" id="Pimportday" placeholder="Product Import" name="dateimport"
+        <!-- Hidden -->
+        <div class="d-none">
+            <input type="text" class="form-control" id="Pimportday" placeholder="Product Import" name="dateimport"
                         value="{{date('Y-m-d H:i:s')}}">
-                    <label for="Pimportday" class="lable-size">Product Import</label>
-                </div>
-            </div>
-            <div class="col-sm-6 col-12">
-                <div class="form-floating my-2 my-sm-0">
-                    <input type="text" class="form-control" id="Pby" placeholder="Product Create By" name="by"
+            <input type="text" class="form-control" id="Pby" placeholder="Product Create By" name="by"
                         value="Zero">
-                    <label for="Pby" class="lable-size">Product Create By</label>
-                </div>
-            </div>
         </div>
         <button type="submit" class="btn btn-primary">Comfirm</button>
         <div type="buttom" class="btn btn-danger" id="Clear">Clear</div>
